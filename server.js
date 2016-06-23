@@ -1,5 +1,6 @@
 var express = require('express');
 var app = express();
+var fs = require('fs');
 
 app.get('/', function (req, res) {
    res.sendFile( __dirname + "/" + "index.htm" );
@@ -10,7 +11,8 @@ app.get('/process_get', function (req, res) {
        first_name:req.query.first_name,
        last_name:req.query.last_name
    };
-   res.end(JSON.stringify(response));
+   fs.appendFileSync('json.txt',JSON.stringify(response));
+   res.end('listo..');
 })
 
 var server = app.listen(3000, function () {
