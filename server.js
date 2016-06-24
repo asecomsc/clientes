@@ -1,18 +1,17 @@
 var express = require('express');
 var app = express();
 var fs = require('fs');
+var querystring = require("querystring");
 
 app.get('/', function (req, res) {
    res.sendFile( __dirname + "/" + "index.htm" );
 })
 
 app.get('/process_get', function (req, res) {
-   response = {
-       first_name:req.query.first_name,
-       last_name:req.query.last_name
-   };
-   fs.appendFileSync('json.txt',JSON.stringify(response));
-   res.end('listo..');
+   var qs = querystring.parse(req.url.split("?")[1]);
+   var miRes = JSON.stringify(qs);
+   fs.appendFileSync('json.txt',miRes);
+   res.end(miRes);
 })
 
 var server = app.listen(3000, function () {
